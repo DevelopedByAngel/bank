@@ -1,0 +1,105 @@
+*
+{
+	padding:0px;
+	outline:none;
+	margin:0px;
+}
+:root
+{
+	--white:#ffffff;
+	--light:#00cac3;
+	--dark:#009590;
+	--gray:#6a6f6f;
+}
+.Main
+{
+	background:var(--dark);
+	width:100vw;
+	height:100vh;
+}
+.heading
+{
+	text-shadow:2px 2px 5px white;
+	font-size:3rem;
+	color:var(--white);
+	letter-spacing:3px;
+	font-family: 'Lobster', cursive;
+
+}
+.MainList
+{
+	background:var(--white);
+	margin:10px 40px;
+	border:10px double white;
+	border-radius:20px;
+}
+.userdiv
+{
+	position:relative;
+	margin:0.8vh;
+	height:5vh;
+	border: 0px solid grey;
+    border-radius: 6px;
+    background: rgba(216, 216 ,216,0.7);
+    font-family: 'Secular One', sans-serif;
+    font-size:large;
+    cursor: pointer;
+    transition:0.25s;
+}
+.userdiv::first-letter
+{
+	text-transform: uppercase;
+}
+.userdiv:nth-child(odd)
+{
+	background: rgba(216, 216 ,216,0.4);
+}
+.nocontent
+{
+	background:#a7afaf7d !important;
+	color:transparent !important;
+}
+.userdiv:hover
+{
+	transform:scale(0.9);
+}
+.userdiv:active
+{
+	transform:scale(1)
+}
+.nocontent::before 
+{ 
+    display: block; 
+    content: ""; 
+    position: absolute; 
+    width: 48%; 
+    height: 5vh; 
+    transform: translateX(-5%); 
+    background: -webkit-gradient(linear, left top, 
+                right top, from(transparent),  
+                color-stop(rgba(255, 255, 255, 0.2)), 
+                to(transparent)); 
+                  
+    background: linear-gradient(90deg, transparent, 
+            rgba(255, 255, 255, 0.2), transparent); 
+
+    /* Adding animation */
+    animation: loading 0.8s infinite; 
+    } 
+@keyframes loading { 
+    100% { 
+        transform: translateX(100%); 
+    } 
+} 
+.userid
+{
+	position: absolute;
+	left:10px
+}
+@media  only screen and (max-width:600px)
+{
+	.userid
+	{
+		display: none
+	}
+}
