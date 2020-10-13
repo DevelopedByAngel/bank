@@ -1,0 +1,52 @@
+.viewtrn
+{
+	position:relative;
+	margin:0.8vh;
+	height:5vh;
+	border: 0px solid grey;
+    border-radius: 6px;
+    background: rgba(216, 216 ,216,0.7);
+    font-family: 'Secular One', sans-serif;
+    font-size:large;
+    transition:0.25s;
+    cursor:default;
+}
+.viewtrn::first-letter
+{
+	text-transform: uppercase;
+}
+.viewtrn:nth-child(odd)
+{
+	background: rgba(216, 216 ,216,0.4);
+}
+.viewtrn div
+{
+	display:inline;
+	margin:0px 10px;
+	padding:0px 10px;
+	height:5vh;
+	background:rgba(0,0,0,0.2);
+}
+table
+{
+	width:100%;
+}
+th
+{
+	font-size:1.5em;
+	color:var(--dark);
+	text-shadow: 0px 0px 5px #4DD0E1;
+}
+.View
+{
+	background:var(--dark);
+	width:auto;
+	min-width:100%;
+	height:auto;
+	padding-bottom:30px;
+	min-height:100vh;
+}
+.heading::first-letter
+{
+	text-transform:capitalize;
+}

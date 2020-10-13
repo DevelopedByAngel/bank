@@ -1,0 +1,162 @@
+.Amountcontainer
+{
+	display: flex;
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	top:-100%;
+	flex-direction:column;
+	overflow: hidden;
+	justify-content:flex-start;
+	align-items:center;
+	background:rgba(0,0,0,0);
+	transition:all 1s linear;
+}
+.Amount
+{
+	display:flex;
+	justify-content:center;
+	justify-content:space-between;
+	background:var(--light);
+	padding:2vh;
+	padding-bottom:8%;
+	width:90vw;
+	overflow:hidden;
+	border:5px dashed var(--white);
+	border-bottom-left-radius:40%;
+	border-bottom-right-radius:40%;
+	box-shadow:0px 10px 20px rgba(255,255,255,0.7);
+	transition:all 1s linear;
+
+}
+.x
+{
+	width: 10vh;
+    position: absolute;
+    height: 10vh;
+    background: #ff6347;
+    border: 2px solid transparent;
+    border-radius: 8vh;
+    top: -%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: var(--white);
+    transition:all 1s linear;
+}
+.userAmount,.toAmount
+{
+	border:0px solid transparent;
+	background-image: linear-gradient(195deg,rgba(255,255,255,0.4) ,transparent);
+	/*border-radius:20px;*/
+	padding:0vh 0vh 1vh 0vh;
+	text-align:left;
+	margin:0vh 2vh;
+	overflow:hidden;
+	width:30vw;
+}
+.toAmount
+{
+	background-image: linear-gradient(145deg,rgba(255,255,255,0.4) ,transparent);
+}
+.Amountcontainer .input
+{
+	position: relative;
+    bottom: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Amountcontainer .input input
+{
+    background: linear-gradient(to bottom,transparent,white);
+    outline: none;
+    border: none;
+    height: 7vh;
+    position: relative;
+    bottom: 2vh;
+    width: 40vh;
+    border: 3px solid #9e620c;
+    border-top: 0px;
+    padding: 0vh 2.5vh;
+    color: #7b7a7a;
+    font-size: large;
+    -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;/*for removing arrow in number input */
+}
+
+.Amountcontainer .input span
+{
+	position: relative;
+    left: 20vh;
+    bottom: 9vh;
+    height: 6vh;
+    width: 5vh;
+    background: #6a6f6f;
+    border: 2px solid #9e620c;
+    font-size: 1.5rem;
+    color: white;
+    cursor:pointer;
+    transition:all 0.25s linear;
+}
+.Amountcontainer .input span:hover
+{
+	font-size:1.8rem;
+}
+.Amountcontainer .input span:active
+{
+	font-size:1.4rem;
+}
+.Amountcontainer .input div
+{
+	display: inline-block;
+    width: 5vh;
+    height: 5vh;
+    background-image: linear-gradient(-135deg, black 50%, transparent 50%);
+    transform: rotateZ(45deg) translate(0px, 26px);
+
+}
+.Amountcontainer img
+{
+	width:45vh;
+}
+.amountdet p
+{
+	padding:1px 8px;
+	font-family: 'Noto Sans JP', sans-serif;
+	color:#e7fffe;
+	text-shadow: 2px 2px 5px #03fff6;
+
+}
+.amtname
+{
+	font-size:2em;
+	background:var(--gray);
+	text-transform:capitalize;
+}
+.amountdet p:nth-child(1)
+{
+	color:var(--dark);
+}
+.amtname p
+{
+	background-image:linear-gradient(to left ,var(--light),white);
+	-webkit-background-clip:text;
+	-webkit-text-fill-color:transparent;
+	padding:0vh 1vh;
+	font-weight:bolder;
+	text-shadow:0px 0px transparent;
+
+}
+.Transaction
+{
+	display:none;
+}
