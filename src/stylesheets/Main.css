@@ -88,9 +88,9 @@
             rgba(255, 255, 255, 0.2), transparent); 
 
     /* Adding animation */
-    animation: loading 0.8s infinite; 
+    animation: loadingdiv 0.8s infinite; 
     } 
-@keyframes loading { 
+@keyframes loadingdiv { 
     100% { 
         transform: translateX(100%); 
     } 

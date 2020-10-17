@@ -30,9 +30,16 @@ class Transaction extends Component
 	{
 		if(this.state.amt>0)
 		{
-			    
-			$('.input').css('display','none');
-			$('.loader').css('display','block');
+		   if($('.x').css('z-index')==15)
+		   {
+				$('.input').html('');
+				$('.input').attr('class','input loaderinput')
+			}
+			else
+			{
+				$('.input').css('display','none');
+				$('.loader').css('display','block');
+			}
 			fetch('https://basicbanksystem.herokuapp.com/transaction/'+from+'/'+to+'/'+amt,{
 				method:'GET',
 				headers:{'Content-Type':'application/json'},
@@ -41,18 +48,36 @@ class Transaction extends Component
 			.then(r=>{
 				console.log(r)
 				this.props.update(r)
-				$('.input').css('display','none');
-				$('.loader').css('display','block');
+				if($('.x').css('z-index')==15)
+			   {
+					$('.input').html('');
+					$('.input').attr('class','input loaderinput')
+				}
+				else
+				{
+					$('.input').css('display','none');
+					$('.loader').css('display','block');
+				}
 				setTimeout(()=>
 				{
-					$('.loader').css('display','none');
-					$('.tick').css({'width': '39px','height': '100px','border-bottom':' 5px solid green','border-right': '5px solid red','transform': 'rotateZ(45deg)'})
-				},6000)
+					if($('.x').css('z-index')==15)
+					{
+						$('.loaderinput').html('<img src="'+$('.tick img').attr('src')+'" style="display:none"></img>');
+						$('.loaderinput').css('animation-name','ok');
+						$('.loaderinput').css('border','3px solid white');
+						$('.loaderinput img').css('display','block');
+					}
+					else
+					{
+						$('.loader').css('display','none');
+						$('.tick').css('display','flex');
+					}
+				},4000)
 				setTimeout(()=>
 				{
 
 					this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
-				},7000);
+				},5000);
 				})
 			.catch(err=>alert('Error occured.Retry'))
 		}
@@ -112,7 +137,8 @@ class Transaction extends Component
 				  			<p>{user.nooftranscations}</p>
 				  			</div>
 				  		</div>
-				  		
+				  		<div className="tick">
+				  		<img src={require("../assets/tick.png")}/></div>
 				  		<div className="toAmount">
 				  			<div className="amountdet  amtname">
 				  			<p>{to.name}</p>
