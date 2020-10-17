@@ -10,7 +10,8 @@ class Transaction extends Component
 		this.state = {
 			user:this.props.user,
 			amt:0,
-			to:{}
+			to:{},
+			list:this.props.userList
 		}
 	}
 	transactionStart=(to)=>
@@ -27,25 +28,59 @@ class Transaction extends Component
 
 	transfer=(from,to,amt)=>
 	{
-		console.log(from,to,amt);
-		fetch('https://basicbanksystem.herokuapp.com/transaction/'+from+'/'+to+'/'+amt,{
-			method:'GET',
-			headers:{'Content-Type':'application/json'},
-		})
-		.then(res=>res.json())
-		.then(r=>{
-			console.log(r)
-			this.props.update(r)
-			this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
-		})
+		if(this.state.amt>0)
+		{
+			    
+			$('.input').css('display','none');
+			$('.loader').css('display','block');
+			fetch('https://basicbanksystem.herokuapp.com/transaction/'+from+'/'+to+'/'+amt,{
+				method:'GET',
+				headers:{'Content-Type':'application/json'},
+			})
+			.then(res=>res.json())
+			.then(r=>{
+				console.log(r)
+				this.props.update(r)
+				$('.input').css('display','none');
+				$('.loader').css('display','block');
+				setTimeout(()=>
+				{
+					$('.loader').css('display','none');
+					$('.tick').css({'width': '39px','height': '100px','border-bottom':' 5px solid green','border-right': '5px solid red','transform': 'rotateZ(45deg)'})
+				},6000)
+				setTimeout(()=>
+				{
+
+					this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
+				},7000);
+				})
+			.catch(err=>alert('Error occured.Retry'))
+		}
+		else
+		{
+			alert('Please transact a valid amount (not 0 or negative)')
+		}
+
+		
 	}
 	close=()=>
 	{
-		$('.Amountcontainer').css({'top':'-100%','background':'rgba(0,0,0,0)'});
+		if($('.x').css('z-index')==15)
+		{
+			$('.Amountcontainer').css({'top':'100%','background':'rgba(0,0,0,0)'});
+		}
+		else
+		{
+			$('.Amountcontainer').css({'top':'-100%','background':'rgba(0,0,0,0)'});
+		}
 		$('.x').css('top','0%');
 	}
 	render()
 	{
+		
+		const index=this.props.userList.findIndex(x =>  x.email===this.props.user.email)
+		if(index>-1)
+		this.state.list.splice(index,1)
 		console.log(this.props.user.name)
 		const {user,to}=this.state;
 	return (
@@ -53,7 +88,7 @@ class Transaction extends Component
 				<div className="Main">
 				<h1 className="heading">Transfer Amount to</h1>
 	   			 <div className="MainList">
-				<List select={this.transactionStart} userList={this.props.userList}/>
+				<List select={this.transactionStart} userList={this.state.list}/>
 				</div>
 				</div>
 				<div className="Amountcontainer">
@@ -77,6 +112,7 @@ class Transaction extends Component
 				  			<p>{user.nooftranscations}</p>
 				  			</div>
 				  		</div>
+				  		
 				  		<div className="toAmount">
 				  			<div className="amountdet  amtname">
 				  			<p>{to.name}</p>
@@ -102,6 +138,19 @@ class Transaction extends Component
 			  		<input type="number" placeholder="Enter Amount" min="0" onChange={(e)=>this.setState({amt:e.target.value})}></input>
 			  		<span onClick={()=>this.transfer(this.state.user.email,this.state.to.email,this.state.amt)}>➤</span>
 			  		</div>
+			  		<div className="loadercontainer">
+			  		<div className="loader">
+			  		<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<div className="shade"></div>
+			  		</div>
+			  		</div>
+
 	  		</div>
 	  		</div>
 

@@ -43,6 +43,7 @@ class App extends Component
 
 			},0);
 		})
+		.catch(err=>alert('Error occured.Retry'))
 	}
 	}
 	componentDidUpdate()
@@ -62,6 +63,7 @@ class App extends Component
 
 			},0);
 		})
+		.catch(err=>alert('Error occured.Retry'))
 		}
 
 	}
@@ -75,6 +77,7 @@ class App extends Component
 		{
 			this.setState({user:this.state.users[selected]})
 			this.state.users.splice(selected,1)// returns only removed element and updates array
+			console.log(this.state.users)
 		}
 	}
 	update=(list)=>
@@ -89,6 +92,7 @@ class App extends Component
 
 				this.setState({user:r})
 			})
+		.catch(err=>alert('Error occured.Retry'))
 	}
 	render()
 	{
