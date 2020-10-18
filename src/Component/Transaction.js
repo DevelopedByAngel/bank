@@ -28,7 +28,12 @@ class Transaction extends Component
 
 	transfer=(from,to,amt)=>
 	{
-		if(this.state.amt>0)
+		console.log(this.state.user.balance)
+		if(amt>this.state.user.balance)
+		{
+			alert("You can transfer amount only below "+this.state.user.balance)
+		}
+		else if(this.state.amt>0)
 		{
 		   if($('.x').css('z-index')==15)
 		   {
@@ -72,12 +77,12 @@ class Transaction extends Component
 						$('.loader').css('display','none');
 						$('.tick').css('display','flex');
 					}
-				},4000)
+				},1500)
 				setTimeout(()=>
 				{
 
 					this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
-				},5000);
+				},2000);
 				})
 			.catch(err=>alert('Error occured.Retry'))
 		}
