@@ -10,7 +10,8 @@ class Transaction extends Component
 		this.state = {
 			user:this.props.user,
 			amt:0,
-			to:{}
+			to:{},
+			list:this.props.userList
 		}
 	}
 	transactionStart=(to)=>
@@ -27,25 +28,89 @@ class Transaction extends Component
 
 	transfer=(from,to,amt)=>
 	{
-		console.log(from,to,amt);
-		fetch('https://basicbanksystem.herokuapp.com/transaction/'+from+'/'+to+'/'+amt,{
-			method:'GET',
-			headers:{'Content-Type':'application/json'},
-		})
-		.then(res=>res.json())
-		.then(r=>{
-			console.log(r)
-			this.props.update(r)
-			this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
-		})
+		console.log(this.state.user.balance)
+		if(amt>this.state.user.balance)
+		{
+			alert("You can transfer amount only below "+this.state.user.balance)
+		}
+		else if(this.state.amt>0)
+		{
+		   if($('.x').css('z-index')==15)
+		   {
+				$('.input').html('');
+				$('.input').attr('class','input loaderinput')
+			}
+			else
+			{
+				$('.input').css('display','none');
+				$('.loader').css('display','block');
+			}
+			fetch('https://basicbanksystem.herokuapp.com/transaction/'+from+'/'+to+'/'+amt,{
+				method:'GET',
+				headers:{'Content-Type':'application/json'},
+			})
+			.then(res=>res.json())
+			.then(r=>{
+				console.log(r)
+				this.props.update(r)
+				if($('.x').css('z-index')==15)
+			   {
+					$('.input').html('');
+					$('.input').attr('class','input loaderinput')
+				}
+				else
+				{
+					$('.input').css('display','none');
+					$('.loader').css('display','block');
+				}
+				setTimeout(()=>
+				{
+					if($('.x').css('z-index')==15)
+					{
+						$('.loaderinput').html('<img src="'+$('.tick img').attr('src')+'" style="display:none"></img>');
+						$('.loaderinput').css('animation-name','ok');
+						$('.loaderinput').css('border','3px solid white');
+						$('.loaderinput img').css('display','block');
+					}
+					else
+					{
+						$('.loader').css('display','none');
+						$('.tick').css('display','flex');
+					}
+				},1500)
+				setTimeout(()=>
+				{
+
+					this.props.route('login',this.props.userList.findIndex(x =>  x.email===this.props.user.email))
+				},2000);
+				})
+			.catch(err=>alert('Error occured.Retry'))
+		}
+		else
+		{
+			alert('Please transact a valid amount (not 0 or negative)')
+		}
+
+		
 	}
 	close=()=>
 	{
-		$('.Amountcontainer').css({'top':'-100%','background':'rgba(0,0,0,0)'});
+		if($('.x').css('z-index')==15)
+		{
+			$('.Amountcontainer').css({'top':'100%','background':'rgba(0,0,0,0)'});
+		}
+		else
+		{
+			$('.Amountcontainer').css({'top':'-100%','background':'rgba(0,0,0,0)'});
+		}
 		$('.x').css('top','0%');
 	}
 	render()
 	{
+		
+		const index=this.props.userList.findIndex(x =>  x.email===this.props.user.email)
+		if(index>-1)
+		this.state.list.splice(index,1)
 		console.log(this.props.user.name)
 		const {user,to}=this.state;
 	return (
@@ -53,7 +118,7 @@ class Transaction extends Component
 				<div className="Main">
 				<h1 className="heading">Transfer Amount to</h1>
 	   			 <div className="MainList">
-				<List select={this.transactionStart} userList={this.props.userList}/>
+				<List select={this.transactionStart} userList={this.state.list}/>
 				</div>
 				</div>
 				<div className="Amountcontainer">
@@ -77,6 +142,8 @@ class Transaction extends Component
 				  			<p>{user.nooftranscations}</p>
 				  			</div>
 				  		</div>
+				  		<div className="tick">
+				  		<img src={require("../assets/tick.png")}/></div>
 				  		<div className="toAmount">
 				  			<div className="amountdet  amtname">
 				  			<p>{to.name}</p>
@@ -102,6 +169,19 @@ class Transaction extends Component
 			  		<input type="number" placeholder="Enter Amount" min="0" onChange={(e)=>this.setState({amt:e.target.value})}></input>
 			  		<span onClick={()=>this.transfer(this.state.user.email,this.state.to.email,this.state.amt)}>➤</span>
 			  		</div>
+			  		<div className="loadercontainer">
+			  		<div className="loader">
+			  		<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<p className="load"></p>
+					<div className="shade"></div>
+			  		</div>
+			  		</div>
+
 	  		</div>
 	  		</div>
 
@@ -111,3 +191,4 @@ class Transaction extends Component
 }
 
 export default Transaction;
+
